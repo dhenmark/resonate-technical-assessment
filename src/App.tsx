@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import ContactsRoute from './Page/Contacts';
 
@@ -11,7 +10,7 @@ function App() {
   )
 
   return (
-    <div style={{ backgroundColor: "#E8EDF1", height: '100vh' }}>
+    <div>
       <RouterProvider router={router} />
     </div>
   );

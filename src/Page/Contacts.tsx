@@ -16,6 +16,7 @@ function ContactsPage() {
     const response = await fetch("https://jsonplaceholder.typicode.com/users");
     const data = await response.json();
     setContacts(data);
+    setFilteredContacts(data)
   }
 
   const handlePageChange = (event: any, page: any) => {
@@ -27,7 +28,7 @@ function ContactsPage() {
     setCurrentPage(1);
   };
 
-  const cardsPerPage = 3
+  const cardsPerPage = 4
   const startIndex = (currentPage - 1) * cardsPerPage;
   const endIndex = startIndex + cardsPerPage;
 
@@ -56,6 +57,14 @@ function ContactsPage() {
     setFilteredContacts(filterdData)
   }, [searchValue])
 
+  if (contacts == undefined|| filteredContacts == undefined) {
+    return (
+      <div>
+        No data yet
+      </div>
+    )
+  }
+
 
   return (
     <div className="Contacts">
@@ -63,7 +72,8 @@ function ContactsPage() {
         display="flex" 
         justifyContent="center" 
         alignItems="center" 
-        minHeight="15vh">
+        minHeight="15vh"
+        padding={2}>
         <Typography variant="h4" >
           Contacts Page
         </Typography>
@@ -71,9 +81,10 @@ function ContactsPage() {
       <Box 
         display="flex" 
         justifyContent="center" 
-        alignItems="normal">
+        alignItems="normal"
+        padding={2}>
         <Typography variant="subtitle1" >
-          Try to search your contacts here
+          Try to search your contact's name or their information here
         </Typography>
       </Box>
       <Box         
@@ -88,8 +99,9 @@ function ContactsPage() {
           value={searchValue}
           onChange={handleSearchChange}
           sx={{
-            width: '20', '& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input': {
-              py: '13px'
+            width: '20', 
+            '& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input': {
+              py: 2
             }
           }}
           InputProps={{
@@ -101,16 +113,40 @@ function ContactsPage() {
           }}
         />
       </Box>
-      <Grid container spacing={4}>
-          {
-            filteredContacts?.slice(startIndex, endIndex).map((x: any, index: any) => (
-              <ContactsCards key={index} data={x} />
+      <Grid container spacing={4} padding={4}>
+          { filteredContacts && filteredContacts?.length > 0 ? (
+            filteredContacts?.slice(startIndex, endIndex).map((contacts: any, index: any) => (
+              <ContactsCards key={index} data={contacts} />
             ))
+            ) : (
+              <></>
+            )
           }
       </Grid>
+      { !filteredContacts || filteredContacts?.length == 0 ? (
+          <Box 
+          display="flex" 
+          justifyContent="center" 
+          alignItems="center" 
+          minHeight="15vh"
+          sx={{
+            padding: 12
+          }}>
+          <Typography variant="h4" >
+            Nothing
+          </Typography>
+        </Box>
+      ) : (
+        <></>
+      )
 
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Pagination count={Math.ceil((filteredContacts?.length ?? 0) / cardsPerPage)} page={currentPage} onChange={handlePageChange} />
+      }
+      <Box sx={{ display: 'flex', justifyContent: 'center', padding: 4 }}>
+      { filteredContacts && filteredContacts?.length > 0 ? (
+        <Pagination count={Math.ceil((filteredContacts?.length ?? 0) / cardsPerPage)} page={currentPage} onChange={handlePageChange} />
+        ) : (
+        <></>
+      )}
       </Box>
     </div>
   );
