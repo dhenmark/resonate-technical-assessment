@@ -6,6 +6,14 @@ This page contains contacts' information.
 2. NodeJS
 3. IDE (i.e. Visual Studio Code)
 
+## Features
+
+1. Search Bar
+The search bar is not limited to the name only, but you can search your contacts' information as well such as email, username, and address.
+
+2. Pagination
+To make it more flexible and visually appealing when we add more contacts.
+
 ## Steps to replicate
 
 1. Clone the repository
@@ -18,11 +26,3 @@ This page contains contacts' information.
 3. There! you may now access it locally, to start type the command:
 
     npm start
-
-## Features
-
-1. Search Bar
-You can search your contacts and their information (ie. email, username, address) in the search bar for easier navigation
-
-2. Pagination
-To make it more flexible and visually appealing when we add more contacts.
